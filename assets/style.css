@@ -1,0 +1,407 @@
+/* SlateAmp 0.3: dense, compact, instrument-like. No oversized cards. */
+.slate-window, .slate-root { background: #171a1e; color: #dbe1dc; }
+.slate-header { background: #202429; border-bottom: 1px solid #31383a; padding: 0 4px; }
+.app-name { font-size: 12px; font-weight: 750; color: #dce4df; letter-spacing: .15px; }
+.slate-header button { color: #a9b9af; border-radius: 5px; min-height: 28px; min-width: 28px; }
+.slate-header button:hover { background: #2d3937; color: #e1f9eb; }
+.display-panel { background: #1b2323; border: 1px solid #3a4b43; border-radius: 6px; padding: 9px 10px 8px; }
+.track-heading { color: #f0f3ef; font-size: 15px; font-weight: 740; }
+.track-detail { color: #97ac9f; font-size: 11px; min-height: 14px; }
+.status-label { color: #98c8ad; font-size: 10px; }
+.spectrum { background: #111b1b; border: 1px solid #284037; border-radius: 3px; }
+.playlist-panel { background: #1b2025; border: 1px solid #333b3b; border-radius: 6px; padding: 5px; }
+.playlist-panel stackswitcher button { min-height: 26px; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+.playlist-panel stackswitcher button:checked { background: #314338; color: #b5f5cd; }
+.track-list { background: transparent; }
+.track-list row { background: transparent; border-bottom: 1px solid #2a3234; border-radius: 3px; }
+.track-list row:hover { background: #2c3536; }
+.track-list row.playing-row { background: #2e443a; }
+.track-list row.playing-row image { color: #a4edbf; }
+.track-number { color: #8c9e93; font-family: monospace; font-size: 10px; }
+.queue-title { color: #d9e6dc; font-size: 12px; }
+.folder-status { padding: 3px 5px 1px; color: #8d9e95; font-size: 10px; }
+.controls-panel { background: #1d2228; border: 1px solid #353e41; border-radius: 6px; padding: 6px 9px; }
+.controls-panel scale trough { background: #3a4743; min-height: 4px; border-radius: 2px; }
+.controls-panel scale highlight { background: #8dddaf; }
+.controls-panel scale slider { background: #d8ebdb; border: 1px solid #79bd97; min-height: 10px; min-width: 10px; }
+.time-label { font-family: monospace; color: #a3baad; font-size: 10px; min-width: 30px; }
+.transport-secondary { padding: 2px; min-height: 27px; min-width: 29px; border-radius: 4px; color: #b9c6be; background: transparent; }
+.transport-secondary:hover { color: #e0faea; background: #334239; }
+.transport-secondary.on { color: #a5f5c0; background: #30483b; }
+.play-button { min-height: 30px; min-width: 37px; padding: 2px; border-radius: 5px; background: #99e9b8; color: #10241a; }
+.play-button:hover { background: #b7f4d0; }
+.eq-button { min-height: 27px; min-width: 32px; padding: 2px 4px; background: #304138; border: 1px solid #476b55; color: #b4efc8; font-family: monospace; font-weight: bold; font-size: 11px; }
+.eq-popover contents { background: #242a2d; border: 1px solid #44504a; border-radius: 7px; }
+.eq-heading { font-size: 12px; font-weight: bold; }
+.eq-label { color: #a5b6aa; font-size: 10px; font-family: monospace; }
+.eq-popover scale.vertical { min-height: 138px; min-width: 28px; }
+.eq-popover scale.vertical trough { min-height: 126px; min-width: 5px; background: #3c4d46; border-radius: 3px; }
+.eq-popover scale.vertical highlight { background: #8cdbab; }
+.eq-popover scale.vertical slider { min-width: 16px; min-height: 9px; background: #c5ead2; border: 1px solid #73b48b; border-radius: 3px; }
+.settings-body { background: #202429; }
+.setting-row { padding: 2px 0; min-height: 31px; }
+.setting-title { font-size: 12px; }
+.setting-path { color: #a0b3aa; font-family: monospace; font-size: 10px; }
+.setting-note { color: #8e9d97; font-size: 10px; margin-top: -5px; }
+.slate-window { font-feature-settings: 'tnum'; }
+
+/* Theme overrides must affect the actual widget classes, not just the header. */
+.theme-classic .slate-root, .theme-classic.slate-window { background: #111a12; color: #deefdc; }
+.theme-classic .slate-header, .theme-classic .controls-panel, .theme-classic .playlist-panel { background: #19271b; border-color: #36543a; }
+.theme-classic .display-panel { background: #142519; border-color: #395b3c; }
+.theme-classic .spectrum { background: #080f08; border-color: #25402a; }
+.theme-classic .play-button { background: #8bf879; color: #10200e; }
+.theme-classic .transport-secondary.on, .theme-classic .playlist-panel stackswitcher button:checked { background: #28532c; color: #a9ff9c; }
+.theme-classic .eq-button { background: #263e27; color: #aaff91; border-color: #4a7440; }
+.theme-classic .controls-panel scale highlight { background: #8bf879; }
+
+.theme-amber .slate-root, .theme-amber.slate-window { background: #1e1a16; color: #f1e6d7; }
+.theme-amber .slate-header, .theme-amber .controls-panel, .theme-amber .playlist-panel { background: #2a241f; border-color: #5a4835; }
+.theme-amber .display-panel { background: #28221b; border-color: #654b32; }
+.theme-amber .spectrum { background: #1b150e; border-color: #5b4329; }
+.theme-amber .play-button { background: #eeb978; color: #31210e; }
+.theme-amber .transport-secondary.on, .theme-amber .playlist-panel stackswitcher button:checked { background: #634729; color: #ffe0ac; }
+.theme-amber .eq-button { background: #57412a; color: #f4d19b; border-color: #896440; }
+.theme-amber .controls-panel scale highlight { background: #eeb978; }
+
+/* 0.4: Keep the dark graphite base, but give each skin its own materials. */
+.queue-remove { min-width: 23px; min-height: 21px; padding: 0; margin: 0; color: #8a9d94; background: transparent; opacity: .58; }
+.queue-remove:hover { opacity: 1; color: #f1a9a2; background: transparent; }
+
+/* Arctic Light: a fully light interface with blue highlights and cool surfaces. */
+.theme-ice.slate-window, .theme-ice .slate-root { background: #e4edf4; color: #203a4f; }
+.theme-ice .slate-header { background: #f4f8fb; border-color: #b9ccd9; }
+.theme-ice .slate-header button { color: #43667d; }
+.theme-ice .slate-header button:hover { color: #154967; background: #d6e6ef; }
+.theme-ice .app-name, .theme-ice .track-heading, .theme-ice .queue-title, .theme-ice .setting-title { color: #15344b; }
+.theme-ice .display-panel { background: #f5fafd; border-color: #c0d3dd; }
+.theme-ice .track-detail, .theme-ice .status-label, .theme-ice .folder-status, .theme-ice .track-number { color: #53758a; }
+.theme-ice .spectrum { background: #d7e5ed; border-color: #9fbac8; }
+.theme-ice .playlist-panel { background: #f8fbfe; border-color: #bfced8; }
+.theme-ice .track-list row { border-color: #d7e4ec; }
+.theme-ice .track-list row:hover { background: #e3f0f7; }
+.theme-ice .track-list row.playing-row { background: #c6e7fa; }
+.theme-ice .track-list row.playing-row image { color: #116c9a; }
+.theme-ice .playlist-panel stackswitcher button:checked { background: #b5dced; color: #174d67; }
+.theme-ice .controls-panel { background: #eef5fa; border-color: #bed0dc; }
+.theme-ice .controls-panel scale trough { background: #b6cad6; }
+.theme-ice .controls-panel scale highlight { background: #318db8; }
+.theme-ice .controls-panel scale slider { background: #ffffff; border-color: #388ab1; }
+.theme-ice .time-label, .theme-ice .transport-secondary { color: #44697f; }
+.theme-ice .transport-secondary:hover { color: #144b69; background: #d2e6ef; }
+.theme-ice .transport-secondary.on { color: #0c638d; background: #c0e2f1; }
+.theme-ice .play-button { color: #ffffff; background: #2486b5; }
+.theme-ice .play-button:hover { background: #1674a3; }
+.theme-ice .eq-button { background: #d2e7f1; border-color: #96c0d3; color: #246681; }
+.theme-ice .settings-body, .theme-ice .eq-popover contents { background: #f4f8fc; color: #274758; }
+.theme-ice .eq-label, .theme-ice .setting-path, .theme-ice .setting-note { color: #57788c; }
+
+/* Deep Ocean: midnight navy with bright cyan, not green. */
+.theme-ocean.slate-window, .theme-ocean .slate-root { background: #090f1d; color: #cceef7; }
+.theme-ocean .slate-header { background: #102038; border-color: #1c4260; }
+.theme-ocean .slate-header button { color: #79aecb; }
+.theme-ocean .display-panel { background: #0a2233; border-color: #1c5368; }
+.theme-ocean .track-heading, .theme-ocean .app-name, .theme-ocean .queue-title { color: #defaff; }
+.theme-ocean .track-detail, .theme-ocean .status-label, .theme-ocean .time-label { color: #87b5c6; }
+.theme-ocean .spectrum { background: #061523; border-color: #185367; }
+.theme-ocean .playlist-panel { background: #0e1b2c; border-color: #24435a; }
+.theme-ocean .track-list row { border-color: #1a3347; }
+.theme-ocean .track-list row:hover { background: #173348; }
+.theme-ocean .track-list row.playing-row { background: #15475c; }
+.theme-ocean .playlist-panel stackswitcher button:checked, .theme-ocean .transport-secondary.on { color: #9cecff; background: #1a4c60; }
+.theme-ocean .controls-panel { background: #101f30; border-color: #23465e; }
+.theme-ocean .controls-panel scale highlight { background: #41c6ee; }
+.theme-ocean .controls-panel scale slider { background: #b8f3ff; border-color: #39a9c6; }
+.theme-ocean .play-button { background: #46d1f3; color: #061c2e; }
+.theme-ocean .eq-button { color: #9cecff; background: #173c52; border-color: #256a80; }
+
+/* Ultraviolet: a saturated purple skin with rose accents. */
+.theme-violet.slate-window, .theme-violet .slate-root { background: #171021; color: #e9dafa; }
+.theme-violet .slate-header { background: #261a38; border-color: #50335d; }
+.theme-violet .slate-header button { color: #c6a8e0; }
+.theme-violet .display-panel { background: #281a36; border-color: #62426d; }
+.theme-violet .track-heading, .theme-violet .app-name, .theme-violet .queue-title { color: #f7e7ff; }
+.theme-violet .track-detail, .theme-violet .status-label, .theme-violet .time-label { color: #b19ac4; }
+.theme-violet .spectrum { background: #130c20; border-color: #603574; }
+.theme-violet .playlist-panel { background: #1e172b; border-color: #4b325e; }
+.theme-violet .track-list row { border-color: #372640; }
+.theme-violet .track-list row:hover { background: #342440; }
+.theme-violet .track-list row.playing-row { background: #503064; }
+.theme-violet .playlist-panel stackswitcher button:checked, .theme-violet .transport-secondary.on { color: #e6bbff; background: #59366c; }
+.theme-violet .controls-panel { background: #241a32; border-color: #4d3660; }
+.theme-violet .controls-panel scale highlight { background: #d28aff; }
+.theme-violet .controls-panel scale slider { background: #f4d0ff; border-color: #a75dd4; }
+.theme-violet .play-button { background: #de9eff; color: #251232; }
+.theme-violet .eq-button { color: #f2caff; background: #4a2d59; border-color: #79508a; }
+
+/* Retro Silver: deliberately square classic desktop controls and olive LCD. */
+.theme-silver.slate-window, .theme-silver .slate-root { background: #b7bdba; color: #24342c; }
+.theme-silver .slate-header { background: #d1d5d2; border-bottom: 2px solid #768681; }
+.theme-silver .slate-header button { color: #3c5147; border-radius: 1px; }
+.theme-silver .app-name, .theme-silver .queue-title, .theme-silver .track-heading { color: #24392d; }
+.theme-silver .display-panel { background: #aab9a7; border: 2px inset #86938c; border-radius: 1px; }
+.theme-silver .spectrum { background: #8ba18c; border: 2px inset #607e6e; border-radius: 0; }
+.theme-silver .track-detail, .theme-silver .time-label, .theme-silver .track-number { color: #486251; }
+.theme-silver .playlist-panel { background: #cbd1cc; border: 2px inset #9aa7a0; border-radius: 1px; }
+.theme-silver .track-list row { border-color: #acb8b0; border-radius: 0; }
+.theme-silver .track-list row:hover { background: #b6c9b9; }
+.theme-silver .track-list row.playing-row { background: #8ab19a; }
+.theme-silver .playlist-panel stackswitcher button { border-radius: 0; }
+.theme-silver .playlist-panel stackswitcher button:checked, .theme-silver .transport-secondary.on { color: #1e3828; background: #a6bca9; }
+.theme-silver .controls-panel { background: #c8cdcb; border: 2px outset #e1e5e0; border-radius: 1px; }
+.theme-silver .controls-panel scale trough { background: #899b8e; }
+.theme-silver .controls-panel scale highlight { background: #517b57; }
+.theme-silver .controls-panel scale slider { background: #e5e9e3; border-color: #496a51; }
+.theme-silver .transport-secondary { color: #374d3c; border-radius: 0; }
+.theme-silver .play-button { background: #69966d; color: #f1f5ec; border-radius: 1px; }
+.theme-silver .eq-button { background: #a3b5a5; color: #315139; border: 1px outset #d7dfd8; border-radius: 0; }
+.theme-silver .settings-body, .theme-silver .eq-popover contents { background: #d0d5d1; color: #253b30; }
+.theme-silver .eq-label, .theme-silver .setting-path, .theme-silver .setting-note { color: #486150; }
+
+/* Phosphor LCD: hard-edged almost-black green monochrome. */
+.theme-phosphor.slate-window, .theme-phosphor .slate-root { background: #030a05; color: #8ae780; }
+.theme-phosphor .slate-header { background: #09150b; border-color: #22482b; }
+.theme-phosphor .slate-header button { color: #76ca73; }
+.theme-phosphor .app-name, .theme-phosphor .track-heading, .theme-phosphor .queue-title { color: #a2ffa1; font-family: monospace; }
+.theme-phosphor .display-panel { background: #091c0b; border-color: #1d632b; border-radius: 1px; }
+.theme-phosphor .track-detail, .theme-phosphor .time-label, .theme-phosphor .track-number, .theme-phosphor .folder-status { color: #65aa63; font-family: monospace; }
+.theme-phosphor .spectrum { background: #020c03; border-color: #175a22; border-radius: 0; }
+.theme-phosphor .playlist-panel { background: #061408; border-color: #1a4f25; border-radius: 1px; }
+.theme-phosphor .track-list row { border-color: #15321a; border-radius: 0; }
+.theme-phosphor .track-list row:hover { background: #102c13; }
+.theme-phosphor .track-list row.playing-row { background: #194321; }
+.theme-phosphor .playlist-panel stackswitcher button:checked, .theme-phosphor .transport-secondary.on { color: #a2ffa1; background: #194923; }
+.theme-phosphor .controls-panel { background: #091a0c; border-color: #245d30; border-radius: 1px; }
+.theme-phosphor .controls-panel scale trough { background: #194224; }
+.theme-phosphor .controls-panel scale highlight { background: #68f56d; }
+.theme-phosphor .controls-panel scale slider { background: #8aff8a; border-color: #367442; }
+.theme-phosphor .transport-secondary { color: #91df90; border-radius: 0; }
+.theme-phosphor .play-button { background: #76ec72; color: #061009; border-radius: 1px; }
+.theme-phosphor .eq-button { background: #173a1e; color: #a3ff9d; border-color: #2a7033; border-radius: 0; }
+
+/* v0.5: EQ is a transport control, not a permanently outlined green action.
+ * Preserve a visible focus outline for keyboard navigation. */
+.eq-button,
+.theme-classic .eq-button, .theme-amber .eq-button, .theme-ice .eq-button,
+.theme-ocean .eq-button, .theme-violet .eq-button, .theme-silver .eq-button,
+.theme-phosphor .eq-button {
+    background: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
+    color: inherit;
+}
+.eq-button:hover { background: rgba(160, 170, 170, 0.15); }
+.eq-button:focus:not(:focus-visible) { outline: none; box-shadow: none; }
+.eq-button:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
+/* GtkMenuButton owns a nested GtkToggleButton: style that actual button, too. */
+.eq-button > button { background: transparent; border: 0; box-shadow: none; color: inherit; }
+.eq-button > button:hover { background: rgba(145, 155, 155, 0.15); }
+.eq-button > button:focus:not(:focus-visible) { outline: 0; box-shadow: none; }
+.eq-button > button:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
+.playing-indicator { color: #a4edbf; }
+
+/* adwaita-light: independent GNOME/Linux skin, no inherited green accents. */
+.theme-adwaita-light.slate-window, .theme-adwaita-light .slate-root { background: #fafafa; color: #242424; }
+.theme-adwaita-light .slate-header { background: #f7f7f7; border-color: #dedede; }
+.theme-adwaita-light .slate-header button { color: #676767; }
+.theme-adwaita-light .slate-header button:hover { color: #242424; background: #edf2fa; }
+.theme-adwaita-light .app-name, .theme-adwaita-light .track-heading, .theme-adwaita-light .queue-title, .theme-adwaita-light .setting-title, .theme-adwaita-light .eq-heading { color: #242424; }
+.theme-adwaita-light .track-detail, .theme-adwaita-light .status-label, .theme-adwaita-light .folder-status, .theme-adwaita-light .track-number, .theme-adwaita-light .time-label, .theme-adwaita-light .eq-label, .theme-adwaita-light .setting-path, .theme-adwaita-light .setting-note { color: #676767; }
+.theme-adwaita-light .display-panel { background: #ffffff; border-color: #dedede; }
+.theme-adwaita-light .spectrum { background: #f2f4f7; border-color: #dedede; }
+.theme-adwaita-light .playlist-panel { background: #ffffff; border-color: #dedede; }
+.theme-adwaita-light .track-list row { border-color: #ebebeb; }
+.theme-adwaita-light .track-list row:hover { background: #edf2fa; }
+.theme-adwaita-light .track-list row.playing-row { background: #dfecff; }
+.theme-adwaita-light .track-list row.playing-row image, .theme-adwaita-light .playing-indicator { color: #1a5ca3; }
+.theme-adwaita-light .playlist-panel stackswitcher button { color: #676767; }
+.theme-adwaita-light .playlist-panel stackswitcher button:checked { background: #dfecff; color: #1a5ca3; }
+.theme-adwaita-light .controls-panel { background: #ffffff; border-color: #dedede; }
+.theme-adwaita-light .controls-panel scale trough { background: #d0d9e5; }
+.theme-adwaita-light .controls-panel scale highlight { background: #3584e4; }
+.theme-adwaita-light .controls-panel scale slider { background: #ffffff; border-color: #3584e4; }
+.theme-adwaita-light .transport-secondary { color: #676767; }
+.theme-adwaita-light .transport-secondary:hover { color: #242424; background: #edf2fa; }
+.theme-adwaita-light .transport-secondary.on { color: #1a5ca3; background: #dfecff; }
+.theme-adwaita-light .play-button { color: #ffffff; background: #3584e4; }
+.theme-adwaita-light .play-button:hover { background: #3584e4; }
+.theme-adwaita-light .eq-button { color: #676767; background: transparent; border-color: transparent; }
+.theme-adwaita-light .eq-button:hover { color: #242424; background: #edf2fa; }
+.theme-adwaita-light .queue-remove { color: #676767; }
+.theme-adwaita-light .queue-remove:hover { color: #1a5ca3; }
+.theme-adwaita-light .settings-body, .theme-adwaita-light .eq-popover contents { background: #ffffff; color: #242424; }
+.theme-adwaita-light .eq-popover scale.vertical trough { background: #d0d9e5; }
+.theme-adwaita-light .eq-popover scale.vertical highlight { background: #3584e4; }
+.theme-adwaita-light .eq-popover scale.vertical slider { background: #ffffff; border-color: #3584e4; }
+
+/* adwaita-dark: independent GNOME/Linux skin, no inherited green accents. */
+.theme-adwaita-dark.slate-window, .theme-adwaita-dark .slate-root { background: #242424; color: #f2f2f2; }
+.theme-adwaita-dark .slate-header { background: #303030; border-color: #454545; }
+.theme-adwaita-dark .slate-header button { color: #b1b1b1; }
+.theme-adwaita-dark .slate-header button:hover { color: #f2f2f2; background: #40454e; }
+.theme-adwaita-dark .app-name, .theme-adwaita-dark .track-heading, .theme-adwaita-dark .queue-title, .theme-adwaita-dark .setting-title, .theme-adwaita-dark .eq-heading { color: #f2f2f2; }
+.theme-adwaita-dark .track-detail, .theme-adwaita-dark .status-label, .theme-adwaita-dark .folder-status, .theme-adwaita-dark .track-number, .theme-adwaita-dark .time-label, .theme-adwaita-dark .eq-label, .theme-adwaita-dark .setting-path, .theme-adwaita-dark .setting-note { color: #b1b1b1; }
+.theme-adwaita-dark .display-panel { background: #303030; border-color: #454545; }
+.theme-adwaita-dark .spectrum { background: #1c1c1c; border-color: #454545; }
+.theme-adwaita-dark .playlist-panel { background: #303030; border-color: #454545; }
+.theme-adwaita-dark .track-list row { border-color: #404040; }
+.theme-adwaita-dark .track-list row:hover { background: #40454e; }
+.theme-adwaita-dark .track-list row.playing-row { background: #3b5168; }
+.theme-adwaita-dark .track-list row.playing-row image, .theme-adwaita-dark .playing-indicator { color: #d0e5ff; }
+.theme-adwaita-dark .playlist-panel stackswitcher button { color: #b1b1b1; }
+.theme-adwaita-dark .playlist-panel stackswitcher button:checked { background: #3b5168; color: #d0e5ff; }
+.theme-adwaita-dark .controls-panel { background: #303030; border-color: #454545; }
+.theme-adwaita-dark .controls-panel scale trough { background: #394250; }
+.theme-adwaita-dark .controls-panel scale highlight { background: #78aeed; }
+.theme-adwaita-dark .controls-panel scale slider { background: #e9eff9; border-color: #78aeed; }
+.theme-adwaita-dark .transport-secondary { color: #b1b1b1; }
+.theme-adwaita-dark .transport-secondary:hover { color: #f2f2f2; background: #40454e; }
+.theme-adwaita-dark .transport-secondary.on { color: #d0e5ff; background: #3b5168; }
+.theme-adwaita-dark .play-button { color: #10273c; background: #78aeed; }
+.theme-adwaita-dark .play-button:hover { background: #78aeed; }
+.theme-adwaita-dark .eq-button { color: #b1b1b1; background: transparent; border-color: transparent; }
+.theme-adwaita-dark .eq-button:hover { color: #f2f2f2; background: #40454e; }
+.theme-adwaita-dark .queue-remove { color: #b1b1b1; }
+.theme-adwaita-dark .queue-remove:hover { color: #d0e5ff; }
+.theme-adwaita-dark .settings-body, .theme-adwaita-dark .eq-popover contents { background: #303030; color: #f2f2f2; }
+.theme-adwaita-dark .eq-popover scale.vertical trough { background: #394250; }
+.theme-adwaita-dark .eq-popover scale.vertical highlight { background: #78aeed; }
+.theme-adwaita-dark .eq-popover scale.vertical slider { background: #e9eff9; border-color: #78aeed; }
+
+/* nord: independent GNOME/Linux skin, no inherited green accents. */
+.theme-nord.slate-window, .theme-nord .slate-root { background: #2e3440; color: #eceff4; }
+.theme-nord .slate-header { background: #3b4252; border-color: #4c566a; }
+.theme-nord .slate-header button { color: #a9b7c7; }
+.theme-nord .slate-header button:hover { color: #eceff4; background: #4a5567; }
+.theme-nord .app-name, .theme-nord .track-heading, .theme-nord .queue-title, .theme-nord .setting-title, .theme-nord .eq-heading { color: #eceff4; }
+.theme-nord .track-detail, .theme-nord .status-label, .theme-nord .folder-status, .theme-nord .track-number, .theme-nord .time-label, .theme-nord .eq-label, .theme-nord .setting-path, .theme-nord .setting-note { color: #a9b7c7; }
+.theme-nord .display-panel { background: #3b4252; border-color: #4c566a; }
+.theme-nord .spectrum { background: #242d3b; border-color: #4c566a; }
+.theme-nord .playlist-panel { background: #343c4a; border-color: #4c566a; }
+.theme-nord .track-list row { border-color: #434d5c; }
+.theme-nord .track-list row:hover { background: #4a5567; }
+.theme-nord .track-list row.playing-row { background: #3f6473; }
+.theme-nord .track-list row.playing-row image, .theme-nord .playing-indicator { color: #d8f1fa; }
+.theme-nord .playlist-panel stackswitcher button { color: #a9b7c7; }
+.theme-nord .playlist-panel stackswitcher button:checked { background: #3f6473; color: #d8f1fa; }
+.theme-nord .controls-panel { background: #343c4a; border-color: #4c566a; }
+.theme-nord .controls-panel scale trough { background: #364956; }
+.theme-nord .controls-panel scale highlight { background: #88c0d0; }
+.theme-nord .controls-panel scale slider { background: #d8f2f7; border-color: #88c0d0; }
+.theme-nord .transport-secondary { color: #a9b7c7; }
+.theme-nord .transport-secondary:hover { color: #eceff4; background: #4a5567; }
+.theme-nord .transport-secondary.on { color: #d8f1fa; background: #3f6473; }
+.theme-nord .play-button { color: #25303a; background: #88c0d0; }
+.theme-nord .play-button:hover { background: #88c0d0; }
+.theme-nord .eq-button { color: #a9b7c7; background: transparent; border-color: transparent; }
+.theme-nord .eq-button:hover { color: #eceff4; background: #4a5567; }
+.theme-nord .queue-remove { color: #a9b7c7; }
+.theme-nord .queue-remove:hover { color: #d8f1fa; }
+.theme-nord .settings-body, .theme-nord .eq-popover contents { background: #343c4a; color: #eceff4; }
+.theme-nord .eq-popover scale.vertical trough { background: #364956; }
+.theme-nord .eq-popover scale.vertical highlight { background: #88c0d0; }
+.theme-nord .eq-popover scale.vertical slider { background: #d8f2f7; border-color: #88c0d0; }
+
+/* catppuccin: independent GNOME/Linux skin, no inherited green accents. */
+.theme-catppuccin.slate-window, .theme-catppuccin .slate-root { background: #1e1e2e; color: #cdd6f4; }
+.theme-catppuccin .slate-header { background: #242436; border-color: #45475a; }
+.theme-catppuccin .slate-header button { color: #a6adc8; }
+.theme-catppuccin .slate-header button:hover { color: #cdd6f4; background: #45465b; }
+.theme-catppuccin .app-name, .theme-catppuccin .track-heading, .theme-catppuccin .queue-title, .theme-catppuccin .setting-title, .theme-catppuccin .eq-heading { color: #cdd6f4; }
+.theme-catppuccin .track-detail, .theme-catppuccin .status-label, .theme-catppuccin .folder-status, .theme-catppuccin .track-number, .theme-catppuccin .time-label, .theme-catppuccin .eq-label, .theme-catppuccin .setting-path, .theme-catppuccin .setting-note { color: #a6adc8; }
+.theme-catppuccin .display-panel { background: #313244; border-color: #45475a; }
+.theme-catppuccin .spectrum { background: #181825; border-color: #45475a; }
+.theme-catppuccin .playlist-panel { background: #252537; border-color: #45475a; }
+.theme-catppuccin .track-list row { border-color: #383a4d; }
+.theme-catppuccin .track-list row:hover { background: #45465b; }
+.theme-catppuccin .track-list row.playing-row { background: #454865; }
+.theme-catppuccin .track-list row.playing-row image, .theme-catppuccin .playing-indicator { color: #d9d9ff; }
+.theme-catppuccin .playlist-panel stackswitcher button { color: #a6adc8; }
+.theme-catppuccin .playlist-panel stackswitcher button:checked { background: #454865; color: #d9d9ff; }
+.theme-catppuccin .controls-panel { background: #252537; border-color: #45475a; }
+.theme-catppuccin .controls-panel scale trough { background: #383850; }
+.theme-catppuccin .controls-panel scale highlight { background: #b4befe; }
+.theme-catppuccin .controls-panel scale slider { background: #e8e9ff; border-color: #b4befe; }
+.theme-catppuccin .transport-secondary { color: #a6adc8; }
+.theme-catppuccin .transport-secondary:hover { color: #cdd6f4; background: #45465b; }
+.theme-catppuccin .transport-secondary.on { color: #d9d9ff; background: #454865; }
+.theme-catppuccin .play-button { color: #1e1e2e; background: #b4befe; }
+.theme-catppuccin .play-button:hover { background: #b4befe; }
+.theme-catppuccin .eq-button { color: #a6adc8; background: transparent; border-color: transparent; }
+.theme-catppuccin .eq-button:hover { color: #cdd6f4; background: #45465b; }
+.theme-catppuccin .queue-remove { color: #a6adc8; }
+.theme-catppuccin .queue-remove:hover { color: #d9d9ff; }
+.theme-catppuccin .settings-body, .theme-catppuccin .eq-popover contents { background: #252537; color: #cdd6f4; }
+.theme-catppuccin .eq-popover scale.vertical trough { background: #383850; }
+.theme-catppuccin .eq-popover scale.vertical highlight { background: #b4befe; }
+.theme-catppuccin .eq-popover scale.vertical slider { background: #e8e9ff; border-color: #b4befe; }
+
+/* solarized-light: independent GNOME/Linux skin, no inherited green accents. */
+.theme-solarized-light.slate-window, .theme-solarized-light .slate-root { background: #fdf6e3; color: #586e75; }
+.theme-solarized-light .slate-header { background: #eee8d5; border-color: #d3cbb5; }
+.theme-solarized-light .slate-header button { color: #657b83; }
+.theme-solarized-light .slate-header button:hover { color: #586e75; background: #eee4cf; }
+.theme-solarized-light .app-name, .theme-solarized-light .track-heading, .theme-solarized-light .queue-title, .theme-solarized-light .setting-title, .theme-solarized-light .eq-heading { color: #586e75; }
+.theme-solarized-light .track-detail, .theme-solarized-light .status-label, .theme-solarized-light .folder-status, .theme-solarized-light .track-number, .theme-solarized-light .time-label, .theme-solarized-light .eq-label, .theme-solarized-light .setting-path, .theme-solarized-light .setting-note { color: #657b83; }
+.theme-solarized-light .display-panel { background: #fdf6e3; border-color: #d3cbb5; }
+.theme-solarized-light .spectrum { background: #eee8d5; border-color: #d3cbb5; }
+.theme-solarized-light .playlist-panel { background: #fffaf0; border-color: #d3cbb5; }
+.theme-solarized-light .track-list row { border-color: #e7dfc7; }
+.theme-solarized-light .track-list row:hover { background: #eee4cf; }
+.theme-solarized-light .track-list row.playing-row { background: #d8e7e9; }
+.theme-solarized-light .track-list row.playing-row image, .theme-solarized-light .playing-indicator { color: #15639e; }
+.theme-solarized-light .playlist-panel stackswitcher button { color: #657b83; }
+.theme-solarized-light .playlist-panel stackswitcher button:checked { background: #d8e7e9; color: #15639e; }
+.theme-solarized-light .controls-panel { background: #fffaf0; border-color: #d3cbb5; }
+.theme-solarized-light .controls-panel scale trough { background: #d1d3bf; }
+.theme-solarized-light .controls-panel scale highlight { background: #268bd2; }
+.theme-solarized-light .controls-panel scale slider { background: #ffffff; border-color: #268bd2; }
+.theme-solarized-light .transport-secondary { color: #657b83; }
+.theme-solarized-light .transport-secondary:hover { color: #586e75; background: #eee4cf; }
+.theme-solarized-light .transport-secondary.on { color: #15639e; background: #d8e7e9; }
+.theme-solarized-light .play-button { color: #ffffff; background: #268bd2; }
+.theme-solarized-light .play-button:hover { background: #268bd2; }
+.theme-solarized-light .eq-button { color: #657b83; background: transparent; border-color: transparent; }
+.theme-solarized-light .eq-button:hover { color: #586e75; background: #eee4cf; }
+.theme-solarized-light .queue-remove { color: #657b83; }
+.theme-solarized-light .queue-remove:hover { color: #15639e; }
+.theme-solarized-light .settings-body, .theme-solarized-light .eq-popover contents { background: #fffaf0; color: #586e75; }
+.theme-solarized-light .eq-popover scale.vertical trough { background: #d1d3bf; }
+.theme-solarized-light .eq-popover scale.vertical highlight { background: #268bd2; }
+.theme-solarized-light .eq-popover scale.vertical slider { background: #ffffff; border-color: #268bd2; }
+
+/* v0.8: a real folder navigator in the extra-wide three-column view. */
+.library-side-panel { min-width: 310px; }
+.library-side-heading { font-size: 12px; font-weight: 700; opacity: 0.80; }
+
+/* v0.9: A GtkMenuButton contains a real GtkButton. Never draw a hover
+ * or keyboard-focus ring on BOTH widgets at the same time. The inner
+ * button alone owns the rounded hover area and keyboard focus indicator. */
+.slate-window menubutton.eq-button,
+.slate-window menubutton.eq-button:hover,
+.slate-window menubutton.eq-button:focus,
+.slate-window menubutton.eq-button:focus-visible {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    padding: 0;
+}
+.slate-window menubutton.eq-button > button {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-radius: 6px;
+    padding: 3px 7px;
+    min-height: 27px;
+    background: transparent;
+    color: inherit;
+}
+.slate-window menubutton.eq-button > button:hover,
+.slate-window menubutton.eq-button > button:checked {
+    background: rgba(145, 155, 155, 0.15);
+}
+.slate-window menubutton.eq-button > button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+}

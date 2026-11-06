@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Bind a macro deck/key to "~/.local/bin/slateampctl play-pause".
+set -Eeuo pipefail
+if ! command -v gdbus >/dev/null 2>&1; then
+  printf 'gdbus is required (package: glib2).\n' >&2
+  exit 1
+fi
+case "${1:-play-pause}" in
+  play-pause|toggle) method=PlayPause ;;
+  play) method=Play ;;
+  pause) method=Pause ;;
+  stop) method=Stop ;;
+  next) method=Next ;;
+  previous|prev) method=Previous ;;
+  *)
+    printf 'Usage: slateampctl [play-pause|play|pause|stop|next|previous]\n' >&2
+    exit 2 ;;
+esac
+gdbus call --session \
+  --dest org.mpris.MediaPlayer2.slateamp \
+  --object-path /org/mpris/MediaPlayer2 \
+  --method "org.mpris.MediaPlayer2.Player.$method" >/dev/null

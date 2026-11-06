@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=SlateAmp
+GenericName=Music Player
+GenericName[ru]=Музыкальный проигрыватель
+Comment=Music and internet radio
+Comment[ru]=Музыка и интернет-радио
+Exec=slateamp
+Icon=io.github.eugenek32.SlateAmp
+Terminal=false
+Categories=AudioVideo;Audio;Player;GTK;
+Keywords=music;radio;playlist;audio;winamp;
+Keywords[ru]=музыка;радио;плейлист;аудио;
+StartupNotify=true
