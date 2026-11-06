@@ -1,3 +1,9 @@
+## v0.9.1 — Natural track sorting
+
+- Sort numbered music files naturally (1, 2, …, 10), rather than lexicographically (1, 10, 2).
+- Add regression tests for numbered album files, including Placebo-style names.
+- No changes to playback, themes or library storage.
+
 # Changelog
 
 ## 0.9.0 (experimental)

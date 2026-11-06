@@ -149,6 +149,43 @@ pub fn is_audio_file(path: &Path) -> bool {
         "mp3" | "flac" | "ogg" | "opus" | "m4a" | "aac" | "wav" | "aiff" | "aif" | "wma" | "alac")
 }
 
+/// Compare filenames naturally: "2 - Song.mp3" comes before "10 - Song.mp3".
+/// Numeric runs are compared without parsing into fixed-width integers.
+fn natural_cmp(a: &str, b: &str) -> std::cmp::Ordering {
+    use std::cmp::Ordering;
+    let a = a.to_lowercase();
+    let b = b.to_lowercase();
+    let (a, b) = (a.as_bytes(), b.as_bytes());
+    let (mut i, mut j) = (0, 0);
+
+    while i < a.len() && j < b.len() {
+        if a[i].is_ascii_digit() && b[j].is_ascii_digit() {
+            let start_a = i;
+            let start_b = j;
+            while i < a.len() && a[i].is_ascii_digit() { i += 1; }
+            while j < b.len() && b[j].is_ascii_digit() { j += 1; }
+            let digits_a = &a[start_a..i];
+            let digits_b = &b[start_b..j];
+            let trimmed_a = digits_a.iter().position(|&v| v != b'0')
+                .map_or(&digits_a[digits_a.len()..], |pos| &digits_a[pos..]);
+            let trimmed_b = digits_b.iter().position(|&v| v != b'0')
+                .map_or(&digits_b[digits_b.len()..], |pos| &digits_b[pos..]);
+            let order = trimmed_a.len().cmp(&trimmed_b.len())
+                .then_with(|| trimmed_a.cmp(trimmed_b));
+            if order != Ordering::Equal { return order; }
+            // Equal numeric value: prefer shorter spelling ("2" before "02").
+            let order = digits_a.len().cmp(&digits_b.len());
+            if order != Ordering::Equal { return order; }
+        } else {
+            let order = a[i].cmp(&b[j]);
+            if order != Ordering::Equal { return order; }
+            i += 1;
+            j += 1;
+        }
+    }
+    a.len().saturating_sub(i).cmp(&b.len().saturating_sub(j))
+}
+
 pub fn scan_music(root: &Path) -> Result<Vec<MusicFolder>> {
     if !root.is_dir() { anyhow::bail!("Not a directory: {}", root.display()); }
     let mut pending = vec![root.to_path_buf()];
@@ -166,7 +203,11 @@ pub fn scan_music(root: &Path) -> Result<Vec<MusicFolder>> {
             else if ty.is_file() && is_audio_file(&path) { files.push(path); }
         }
         if !files.is_empty() {
-            files.sort_by_key(|p| p.to_string_lossy().to_lowercase());
+            files.sort_by(|a, b| {
+                let a = a.file_name().unwrap_or_else(|| a.as_os_str()).to_string_lossy();
+                let b = b.file_name().unwrap_or_else(|| b.as_os_str()).to_string_lossy();
+                natural_cmp(&a, &b)
+            });
             let relative = dir.strip_prefix(root).unwrap_or(&dir);
             let name = if relative.as_os_str().is_empty() { ".".to_string() }
                 else { relative.to_string_lossy().to_string() };
@@ -204,6 +245,35 @@ pub fn save_queue(tracks: &[Track]) -> Result<()> {
 #[cfg(test)]
 mod music_tests {
     use super::*;
+    #[test]
+    fn numeric_track_order_uses_natural_sort() {
+        use std::cmp::Ordering;
+        assert_eq!(natural_cmp("1 - Bulletproof Cupid.flac", "10 - Second Sight.flac"), Ordering::Less);
+        assert_eq!(natural_cmp("2 - English Summer Rain.flac", "10 - Second Sight.flac"), Ordering::Less);
+        assert_eq!(natural_cmp("09. Track.mp3", "10. Track.mp3"), Ordering::Less);
+        assert_eq!(natural_cmp("11 - Track.flac", "2 - Track.flac"), Ordering::Greater);
+        assert_eq!(natural_cmp("002 - Song.flac", "2 - Song.flac"), Ordering::Greater);
+    }
+
+    #[test]
+    fn scan_sorts_placebo_style_track_numbers() {
+        let root = std::env::temp_dir().join(format!("slateamp-sort-{}", std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();
+        for name in ["1 - Bulletproof Cupid.mp3", "10 - Second Sight.mp3", "2 - English Summer Rain.mp3"] {
+            std::fs::write(root.join(name), b"stub").unwrap();
+        }
+        let folders = scan_music(&root).unwrap();
+        let names: Vec<_> = folders[0].files.iter()
+            .map(|path| path.file_name().unwrap().to_string_lossy().to_string())
+            .collect();
+        assert_eq!(names, vec![
+            "1 - Bulletproof Cupid.mp3",
+            "2 - English Summer Rain.mp3",
+            "10 - Second Sight.mp3",
+        ]);
+        let _ = std::fs::remove_dir_all(root);
+    }
+
     #[test]
     fn scan_groups_files_by_their_actual_directories() {
         let root = std::env::temp_dir().join(format!("slateamp-folders-{}", std::process::id()));

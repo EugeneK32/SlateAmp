@@ -31,7 +31,7 @@ A compact GTK4 music player for Linux, inspired by the classic Winamp.
 
 ![SlateAmp running on GNOME](docs/screenshot.png)
 
-**Version:** 0.9.0 · **License:** MIT · **Stack:** Rust, GTK4/libadwaita, GStreamer
+**Version:** 0.9.1 · **License:** MIT · **Stack:** Rust, GTK4/libadwaita, GStreamer
 
 ## Features
 
@@ -124,3 +124,7 @@ For reproducible application builds, generate and commit `Cargo.lock` once with 
 ## License
 
 [MIT](LICENSE).
+
+### Track order
+
+Files in music folders use natural filename sorting (e.g. `1 - …`, `2 - …`, `10 - …`). After upgrading, rescan the music library and reload the album/playlist to replace the previously sorted queue.
